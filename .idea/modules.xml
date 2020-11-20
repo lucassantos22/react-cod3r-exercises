@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/Curso-React-Cod3r.iml" filepath="$PROJECT_DIR$/.idea/Curso-React-Cod3r.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Curso-React-Cod3r.iml" filepath="$PROJECT_DIR$/Curso-React-Cod3r.iml" group="Curso-React-Cod3r" />
     </modules>
   </component>
 </project>
