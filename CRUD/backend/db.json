@@ -1,14 +1,19 @@
 {
-    "users":[
-        {
-            "id": 1,
-            "name": "Lucas",
-            "email": "lucas@gmail.com"
-        },
-        {
-            "id": 2,
-            "name": "Leticia",
-            "email": "lele@gmail.com"
-        }
-    ]
+  "users": [
+    {
+      "id": 2,
+      "name": "Leticia",
+      "email": "lele@gmail.com"
+    },
+    {
+      "name": "Ana Silva 2",
+      "email": "anasilva@negocio.com.br",
+      "id": 3
+    },
+    {
+      "name": "Ola",
+      "email": "ola@gmail.com",
+      "id": 6
+    }
+  ]
 }

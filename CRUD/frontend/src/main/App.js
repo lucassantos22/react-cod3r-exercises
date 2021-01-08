@@ -1,19 +1,22 @@
 import React from 'react';
+import {HashRouter} from 'react-router-dom';
 
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'font-awesome/css/font-awesome.min.css';
 
 import Logo from '../components/templates/Logo';
-import Main from '../components/templates/Main';
 import Nav from '../components/templates/Nav';
 import Footer from '../components/templates/Footer';
+import Routes from './Routes';
 
 export default () => (
-    <div className='app'>
-        <Logo/>
-        <Nav/>
-        <Main icon="home" title="Inicio" subtitle="Segundo projeto do capítulo React."/>
-        <Footer/>
-    </div>
+    <HashRouter>
+        <div className='app'>
+            <Logo/>
+            <Nav/>
+            <Routes/>
+            <Footer/>
+        </div>
+    </HashRouter>
 )

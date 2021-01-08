@@ -6,8 +6,10 @@ import './Main.css';
 export default props => (
     <>
         <Header {...props}/>
-        <main className='conteudo'>
-            Conteúdo
+        <main className='conteudo container-fluid '>
+            <div className='p-3 mt-3'>
+                {props.children}
+            </div>
         </main>
     </>
 )

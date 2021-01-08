@@ -1,0 +1,32 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "first_name": "Lucas",
+      "last_name": "Santos",
+      "birth_date": "22/12/1999",
+      "charge": "Programmer"
+    },
+    {
+      "id": 2,
+      "first_name": "Ana",
+      "last_name": "Silva",
+      "birth_date": "22/12/1998",
+      "charge": "Programmer"
+    },
+    {
+      "id": 3,
+      "first_name": "Diogo",
+      "last_name": "Santos",
+      "birth_date": "22/12/1991",
+      "charge": "Programmer"
+    },
+    {
+      "first_name": "Danilo",
+      "last_name": "Mikato",
+      "birth_date": "2021-01-06",
+      "charge": "Tester",
+      "id": 4
+    }
+  ]
+}
