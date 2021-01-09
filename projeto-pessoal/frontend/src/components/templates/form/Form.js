@@ -34,6 +34,15 @@ class FormComponent extends Component {
 
     sendUser = (e) =>{
         e.preventDefault();
+        if (
+            this.state.first_name.length === 0 ||
+            this.state.last_name.length === 0 ||
+            this.state.birth_date.length === 0 ||
+            this.state.charge.length === 0
+            ){
+                alert('Todos os campos são obrigatórios');
+                return;
+        }
         axios.post(URL, {
             first_name: this.state.first_name,
             last_name: this.state.last_name,
@@ -49,7 +58,7 @@ class FormComponent extends Component {
             <Form>
             <Form.Group controlId="formBasicEmail">
                 <Form.Label>Primeiro Nome</Form.Label>
-                <Form.Control onChange={e => this.setState({first_name:e.target.value})} type="text"/>
+                <Form.Control onChange={e => this.setState({first_name:e.target.value})} type="text" required/>
                 <Form.Text className="text-muted">
                 Campo obrigatório
                 </Form.Text>

@@ -1,8 +1,10 @@
 import {createStore, combineReducers} from 'redux';
 import isTableVisible from './reducers/isTableVisible';
+import users from './reducers/users';
 
 const reducers = combineReducers({
-    isTableVisible
+    isTableVisible,
+    users
 });
 
 export default function storeConfig(){

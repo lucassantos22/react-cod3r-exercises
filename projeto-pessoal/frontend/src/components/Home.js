@@ -7,10 +7,6 @@ import {Card, Nav} from 'react-bootstrap';
 import {connect} from 'react-redux';
 import {changeVision} from '../store/actions/isTableVisible';
 
-const initialState = {
-    isTableVisible: true
-}
-
 const mapStateToProps = state =>{
     return {
         isTableVisible: state.isTableVisible.isTableVisible
@@ -31,8 +27,6 @@ class Home extends Component {
     constructor(props) {
         super(props);
     }
-
-    state = {...initialState}
 
     render(){
         return(

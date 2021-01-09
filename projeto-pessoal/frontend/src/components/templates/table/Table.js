@@ -1,31 +1,46 @@
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import {updateUsers} from '../../../store/actions/users';
+
 import {Table, Button} from 'react-bootstrap';
 
 import axios from 'axios';
 
 const URL = 'http://localhost:3001/users';
 
-const initialState = {
-    users:[]
+const mapStateToProps = state =>{
+    return {
+        users: state.users.users
+    }
 }
 
-export default class TableComponent extends Component{
+const mapDispatchToProps = dispatch => {
+    return {
+        updateUsers(userList){
+            dispatch(updateUsers(userList));
+        }
+    }
+}
+
+class TableComponent extends Component{
+
+    constructor(props){
+        super(props);
+    }
 
     deleteUser = async (id)=>{
         const confirmation = window.confirm('Tem certeza?');
         if (confirmation){
             await axios.delete(`${URL}/${id}`);
-            const newUserList = this.state.users.filter(user=>user.id != id);
-            this.setState({users: newUserList});
+            const newUserList = this.props.users.filter(user=>user.id != id);
+            this.props.updateUsers(newUserList);
         } 
     }
 
     async componentWillMount(){
         const users = await axios.get(URL);
-        this.setState({users: users.data});
+        this.props.updateUsers(users.data);
     }
-
-    state = {...initialState};
 
     render(){
         return(
@@ -41,7 +56,7 @@ export default class TableComponent extends Component{
                     </tr>
                 </thead>
                 <tbody>
-                    {this.state.users.map(user=>(
+                    {this.props.users.map(user=>(
                         <tr>
                         <td>{user.first_name}</td>
                         <td>{user.last_name}</td>
@@ -56,3 +71,5 @@ export default class TableComponent extends Component{
         )
     }
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(TableComponent)

@@ -9,7 +9,7 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <Navbar title='HR Admin'/>
+        <Navbar title='Destro Soluções'/>
         <Routes/>
       </BrowserRouter>
     </div>
