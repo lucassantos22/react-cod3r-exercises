@@ -7,6 +7,7 @@ export default props => (
             <Navbar.Brand><Link to='/' style={{color:'white'}}>{props.title}</Link></Navbar.Brand>
             <Nav className="mr-auto">
             <Nav.Link><Link to='/' style={{color:'white'}}>Home</Link></Nav.Link>
+            <Nav.Link><Link to='/sobre' style={{color:'white'}}>Solicitações</Link></Nav.Link>
             <Nav.Link><Link to='/sobre' style={{color:'white'}}>Sobre</Link></Nav.Link>
             </Nav>
             <Form inline>
