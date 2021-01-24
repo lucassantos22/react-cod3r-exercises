@@ -1,18 +1,19 @@
 {
-  "users": [
+  "tasks": [
     {
       "id": 1,
-      "first_name": "Lucas",
-      "last_name": "Santos",
-      "birth_date": "22/12/1999",
-      "charge": "Programmer"
+      "title": "Lucas",
+      "completed": "Santos"
     },
     {
-      "first_name": "a",
-      "last_name": "a",
-      "birth_date": "2021-01-21",
-      "charge": "a",
-      "id": 3
+      "title": "121w",
+      "completed": false,
+      "id": 6
+    },
+    {
+      "title": "11",
+      "completed": false,
+      "id": 7
     }
   ]
 }

@@ -1,23 +1,24 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {updateUsers} from '../../../store/actions/users';
+import {updateTasks} from '../../../store/actions/tasks';
 
 import {Table, Button} from 'react-bootstrap';
+import { Check, TrashFill } from 'react-bootstrap-icons';
 
 import axios from 'axios';
 
-const URL = 'http://localhost:3001/users';
+const URL = 'https://todo-backend-express.herokuapp.com/';
 
 const mapStateToProps = state =>{
     return {
-        users: state.users.users
+        tasks: state.users.tasks
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        updateUsers(userList){
-            dispatch(updateUsers(userList));
+        updateTasks(userList){
+            dispatch(updateTasks(userList));
         }
     }
 }
@@ -28,18 +29,19 @@ class TableComponent extends Component{
         super(props);
     }
 
-    deleteUser = async (id)=>{
+    deleteUser = async (url)=>{
         const confirmation = window.confirm('Tem certeza?');
         if (confirmation){
+            const id = url.split('/')[1];
             await axios.delete(`${URL}/${id}`);
-            const newUserList = this.props.users.filter(user=>user.id != id);
-            this.props.updateUsers(newUserList);
+            const newUserList = this.props.tasks.filter(task=>task.url != url);
+            this.props.updateTasks(newUserList);
         } 
     }
 
     async componentWillMount(){
-        const users = await axios.get(URL);
-        this.props.updateUsers(users.data);
+        const tasks = await axios.get(URL);
+        this.props.updateTasks(tasks.data);
     }
 
     render(){
@@ -48,21 +50,19 @@ class TableComponent extends Component{
             <Table striped hover>
                 <thead>
                     <tr>
-                    <th>Primeiro Nome</th>
-                    <th>Último Nome</th>
-                    <th>Data de Nascimento</th>
-                    <th>Cargo</th>
-                    <th>Ação</th>
+                        <th>Status</th>
+                        <th>Tarefa</th>
+                        <th>Ordem</th>
+                        <th>Ação</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {this.props.users.map(user=>(
+                    {this.props.tasks.map(task=>(
                         <tr>
-                        <td>{user.first_name}</td>
-                        <td>{user.last_name}</td>
-                        <td>{user.birth_date}</td>
-                        <td>{user.charge}</td>
-                        <td><Button variant="outline-danger" onClick={()=>this.deleteUser(user.id)}>Apagar</Button></td>
+                        <td><Button variant='success'>{task.completed}<Check size='20'/></Button></td>
+                        <td>{task.title}</td>
+                        <td>{task.order}</td>
+                        <td><Button variant="danger" onClick={()=>this.deleteUser(task.url)}><TrashFill/></Button>{' '}</td>
                         </tr>
                     ))}
                 </tbody>

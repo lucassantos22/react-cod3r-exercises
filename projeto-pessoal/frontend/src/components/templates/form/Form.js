@@ -6,14 +6,11 @@ import axios from 'axios';
 import {Form, Button} from 'react-bootstrap';
 import {changeVision} from '../../../store/actions/isTableVisible';
 
-const URL = 'http://localhost:3001/users';
+const URL = 'https://todo-backend-express.herokuapp.com/';
 
 const initialStale = {
-    id: '',
-    first_name: '',
-    last_name: '',
-    birth_date: '',
-    charge: ''
+    title: '',
+    order: ''
 }
 
 const mapDispatchToProps = dispatch => {
@@ -32,24 +29,17 @@ class FormComponent extends Component {
 
     state = {...initialStale};
 
-    sendUser = (e) =>{
+    sendTask = (e) =>{
         e.preventDefault();
-        if (
-            this.state.first_name.length === 0 ||
-            this.state.last_name.length === 0 ||
-            this.state.birth_date.length === 0 ||
-            this.state.charge.length === 0
-            ){
-                alert('Todos os campos são obrigatórios');
-                return;
+        if (this.state.title.length === 0 || this.state.order.length === 0){
+            alert('Todos os campos devem ser preenchidos');
+            return;
         }
         axios.post(URL, {
-            first_name: this.state.first_name,
-            last_name: this.state.last_name,
-            birth_date: this.state.birth_date,
-            charge: this.state.charge
+            title: this.state.title,
+            order: this.state.order
         });
-        this.props.changeVision(true);
+        this.props.changeVision(1);
     }
 
     render(){
@@ -57,38 +47,20 @@ class FormComponent extends Component {
             <>
             <Form>
             <Form.Group controlId="formBasicEmail">
-                <Form.Label>Primeiro Nome</Form.Label>
-                <Form.Control onChange={e => this.setState({first_name:e.target.value})} type="text" required/>
+                <Form.Label>Tarefa</Form.Label>
+                <Form.Control onChange={e => this.setState({title:e.target.value})} type="text" required/>
+                <Form.Text className="text-muted">
+                Campo obrigatório
+                </Form.Text>
+
+                <Form.Label>Ordem</Form.Label>
+                <Form.Control onChange={e => this.setState({order:e.target.value})} type="text" required/>
                 <Form.Text className="text-muted">
                 Campo obrigatório
                 </Form.Text>
             </Form.Group>
         
-            <Form.Group controlId="formBasicPassword">
-                <Form.Label>Último Nome</Form.Label>
-                <Form.Control type="text" onChange={e => this.setState({last_name:e.target.value})}/>
-                <Form.Text className="text-muted">
-                Campo obrigatório
-                </Form.Text>
-            </Form.Group>
-        
-            <Form.Group controlId="formBasicPassword">
-                <Form.Label>Data de Nascimento</Form.Label>
-                <Form.Control type="date" onChange={e => this.setState({birth_date:e.target.value})}/>
-                <Form.Text className="text-muted">
-                Campo obrigatório
-                </Form.Text>
-            </Form.Group>
-        
-            <Form.Group controlId="formBasicPassword">
-                <Form.Label>Cargo</Form.Label>
-                <Form.Control type="text" onChange={e => this.setState({charge:e.target.value})}/>
-                <Form.Text className="text-muted">
-                Campo obrigatório
-                </Form.Text>
-            </Form.Group>
-        
-            <Button variant="primary" type="submit" onClick={e => this.sendUser(e)}>
+            <Button variant="primary" type="submit" onClick={e => this.sendTask(e)}>
                 Adicionar
             </Button>
             </Form>

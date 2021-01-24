@@ -1,5 +1,5 @@
 const initialState = {
-    isTableVisible: true
+    isTableVisible: 1
 }
 
 export default (state = initialState, action)=>{

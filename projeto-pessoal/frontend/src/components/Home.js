@@ -35,15 +35,21 @@ class Home extends Component {
                 <Card.Header>
                     <Nav variant="tabs" defaultActiveKey="#first">
                     <Nav.Item>
-                        <Nav.Link active={this.props.isTableVisible ? true : false} onClick={() => this.props.changeVision(true)}>Lista</Nav.Link>
+                        <Nav.Link active={this.props.isTableVisible === 1 ? true : false} onClick={() => this.props.changeVision(1)}>Tarefas</Nav.Link>
                     </Nav.Item>
                     <Nav.Item>
-                        <Nav.Link active={this.props.isTableVisible ? false : true} onClick={() => this.props.changeVision(false)}>Formulário</Nav.Link>
+                        <Nav.Link active={this.props.isTableVisible === 2 ? true : false} onClick={() => this.props.changeVision(2)}>A fazer</Nav.Link>
+                    </Nav.Item>
+                    <Nav.Item>
+                        <Nav.Link active={this.props.isTableVisible === 3 ? true : false} onClick={() => this.props.changeVision(3)}>Concluídas</Nav.Link>
+                    </Nav.Item>
+                    <Nav.Item>
+                        <Nav.Link active={this.props.isTableVisible === 4 ? true : false} onClick={() => this.props.changeVision(4)}>Formulário</Nav.Link>
                     </Nav.Item>
                     </Nav>
                 </Card.Header>
                 <Card.Body>
-                    {this.props.isTableVisible ? <Table/> : <Form/>}
+                    {this.props.isTableVisible === 1 ? <Table/> : this.props.isTableVisible === 2 ? <Table/> : <Form/>}
                 </Card.Body>
             </Card>
             </>
