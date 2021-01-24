@@ -6,10 +6,16 @@ import {Card, Nav} from 'react-bootstrap';
 
 import {connect} from 'react-redux';
 import {changeVision} from '../store/actions/isTableVisible';
+import {updateTasks} from '../store/actions/tasks';
+
+import axios from 'axios';
+
+const URL = 'https://todo-backend-express.herokuapp.com/';
 
 const mapStateToProps = state =>{
     return {
-        isTableVisible: state.isTableVisible.isTableVisible
+        isTableVisible: state.isTableVisible.isTableVisible,
+        tasks: state.users.tasks
     }
 }
 
@@ -17,15 +23,30 @@ const mapDispatchToProps = dispatch =>{
     return {
         changeVision(trueOrFalse) {
             dispatch(changeVision(trueOrFalse));
+        },
+        updateTasks(userList){
+            dispatch(updateTasks(userList));
         }
     }
 }
-
 
 class Home extends Component {
 
     constructor(props) {
         super(props);
+    }
+
+    async componentWillMount(){
+        const tasks = await axios.get(URL);
+        this.props.updateTasks(tasks.data);
+    }
+
+    filterTasksCompleteds(){
+        return this.props.tasks.filter(task=>task.completed);
+    }
+
+    filterTasksNotCompleteds(){
+        return this.props.tasks.filter(task=>!task.completed);
     }
 
     render(){
@@ -49,7 +70,7 @@ class Home extends Component {
                     </Nav>
                 </Card.Header>
                 <Card.Body>
-                    {this.props.isTableVisible === 1 ? <Table/> : this.props.isTableVisible === 2 ? <Table/> : <Form/>}
+                    {this.props.isTableVisible === 1 ? <Table tasks={this.props.tasks} completed='trueAndFalse'/> : this.props.isTableVisible === 2 ? <Table tasks={this.filterTasksNotCompleteds()}/> : this.props.isTableVisible === 3 ? <Table tasks={this.filterTasksCompleteds()} completed={true}/> : <Form/>}
                 </Card.Body>
             </Card>
             </>

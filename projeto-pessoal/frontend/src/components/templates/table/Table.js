@@ -1,35 +1,17 @@
 import React, {Component} from 'react';
-import {connect} from 'react-redux';
-import {updateTasks} from '../../../store/actions/tasks';
 
-import {Table, Button} from 'react-bootstrap';
-import { Check, TrashFill } from 'react-bootstrap-icons';
+import {Table, Button, Card} from 'react-bootstrap';
+import { Check, TrashFill, Exclamation } from 'react-bootstrap-icons';
 
 import axios from 'axios';
 
-const URL = 'https://todo-backend-express.herokuapp.com/';
-
-const mapStateToProps = state =>{
-    return {
-        tasks: state.users.tasks
-    }
-}
-
-const mapDispatchToProps = dispatch => {
-    return {
-        updateTasks(userList){
-            dispatch(updateTasks(userList));
-        }
-    }
-}
-
-class TableComponent extends Component{
+export default class TableComponent extends Component{
 
     constructor(props){
         super(props);
     }
 
-    deleteUser = async (url)=>{
+    deleteTask = async (url)=>{
         const confirmation = window.confirm('Tem certeza?');
         if (confirmation){
             const id = url.split('/')[1];
@@ -39,37 +21,43 @@ class TableComponent extends Component{
         } 
     }
 
-    async componentWillMount(){
-        const tasks = await axios.get(URL);
-        this.props.updateTasks(tasks.data);
-    }
-
     render(){
         return(
             <>
             <Table striped hover>
-                <thead>
-                    <tr>
-                        <th>Status</th>
-                        <th>Tarefa</th>
-                        <th>Ordem</th>
-                        <th>Ação</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {this.props.tasks.map(task=>(
-                        <tr>
-                        <td><Button variant='success'>{task.completed}<Check size='20'/></Button></td>
-                        <td>{task.title}</td>
-                        <td>{task.order}</td>
-                        <td><Button variant="danger" onClick={()=>this.deleteUser(task.url)}><TrashFill/></Button>{' '}</td>
-                        </tr>
-                    ))}
-                </tbody>
+                {this.props.tasks.length > 0 ? 
+                    <>
+                        <thead>
+                            <tr>
+                                <th>Status</th>
+                                <th>Tarefa</th>
+                                <th>Ordem</th>
+                                {!this.props.completed || this.props.completed == 'trueAndFalse' ? <th>Ação</th> : null}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {this.props.tasks.map(task=>(
+                                <tr>
+                                <td>{task.completed ? <Button variant='success'><Check size='20'/></Button> : <Button variant='warning'><Exclamation size='20'/></Button>}</td>
+                                {this.props.completed === true? <td style={{textDecoration: "line-through"}}>{task.title}</td> : <td>{task.title}</td>}
+                                <td>{task.order}</td>
+                                {!task.completed ? <td><Button variant="danger" onClick={()=>this.deleteTask(task.url)}><TrashFill/></Button></td> : <Button variant="secondary"><TrashFill/></Button>}
+                                </tr>
+                            ))}
+                        </tbody>
+                    </>
+                : 
+                    <Card>
+                    <Card.Body>
+                        <Card.Title id='Sobre'>Lista vazia</Card.Title>
+                        <Card.Text>
+                            Ops! Não existem tarefas {this.props.completed === true ? 'concluídas' : !this.props.completed ? 'em andamento' : ''} cadastradas :(
+                        </Card.Text>
+                    </Card.Body>
+                    </Card>
+                }
             </Table>
         </>
         )
     }
 }
-
-export default connect(mapStateToProps, mapDispatchToProps)(TableComponent)
