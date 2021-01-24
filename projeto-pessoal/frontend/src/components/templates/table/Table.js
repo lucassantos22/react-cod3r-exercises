@@ -13,16 +13,16 @@ export default props => (
                         <th>Status</th>
                         <th>Tarefa</th>
                         <th>Ordem</th>
-                        {!props.completed || props.completed == 'trueAndFalse' ? <th>Ação</th> : null}
+                        <th>Ação</th>
                     </tr>
                 </thead>
                 <tbody>
                     {props.tasks.map(task=>(
                         <tr>
-                        <td>{task.completed ? <Button variant='success'><Check size='20'/></Button> : <Button variant='warning'><Exclamation size='20'/></Button>}</td>
+                        <td>{task.completed ? <Button onClick={()=>props.completeTask(task.url, false)} variant='success'><Check size='20'/></Button> : <Button onClick={()=>props.completeTask(task.url, true)} variant='warning'><Exclamation size='20'/></Button>}</td>
                         {props.completed === true? <td style={{textDecoration: "line-through"}}>{task.title}</td> : <td>{task.title}</td>}
                         <td>{task.order}</td>
-                        {!task.completed ? <td><Button variant="danger" onClick={()=>props.deleteTask(task.url)}><TrashFill/></Button></td> : <Button variant="secondary"><TrashFill/></Button>}
+                        {!task.completed ? <td><Button variant="danger" onClick={()=>props.deleteTask(task.url)}><TrashFill/></Button></td> : <td><Button variant="secondary"><TrashFill/></Button></td>}
                         </tr>
                     ))}
                 </tbody>

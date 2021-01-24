@@ -29,7 +29,7 @@ class FormComponent extends Component {
 
     state = {...initialStale};
 
-    sendTask = (e) =>{
+    sendTask = async (e) =>{
         e.preventDefault();
         if (this.state.title.length === 0 || this.state.order.length === 0){
             alert('Todos os campos devem ser preenchidos');
@@ -54,7 +54,7 @@ class FormComponent extends Component {
                 </Form.Text>
 
                 <Form.Label>Ordem</Form.Label>
-                <Form.Control onChange={e => this.setState({order:e.target.value})} type="text" required/>
+                <Form.Control onChange={e => this.setState({order:e.target.value})} type="number" required/>
                 <Form.Text className="text-muted">
                 Campo obrigatório
                 </Form.Text>
