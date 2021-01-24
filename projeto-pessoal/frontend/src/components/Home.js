@@ -47,9 +47,8 @@ class Home extends Component {
 
     async updateTasks(){
         const tasks = await axios.get(URL);
-        if (tasks!=this.props.tasks) {
-            this.props.updateTasks(tasks.data);
-        }
+        if (JSON.stringify(tasks.data) == JSON.stringify(this.props.tasks)) return
+        this.props.updateTasks(tasks.data);
     }
 
     async completeTask(url, completed){
@@ -57,6 +56,7 @@ class Home extends Component {
         {
             completed
         });
+        await this.updateTasks();
     }
 
     async deleteCompletedTasks(){
@@ -64,6 +64,7 @@ class Home extends Component {
         for(const completedTask of completedTasks){
             await axios.delete(completedTask.url)
         }
+        await this.updateTasks();
     }
 
     deleteTask = async (url)=>{
@@ -73,6 +74,7 @@ class Home extends Component {
             await axios.delete(`${URL}/${id}`);
             const newUserList = this.props.tasks.filter(task=>task.url != url);
             this.props.updateTasks(newUserList);
+            await this.updateTasks();
         }
     }
 

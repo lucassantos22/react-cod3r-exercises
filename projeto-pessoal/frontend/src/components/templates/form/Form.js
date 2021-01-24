@@ -5,6 +5,7 @@ import axios from 'axios';
 
 import {Form, Button} from 'react-bootstrap';
 import {changeVision} from '../../../store/actions/whichTableIsVisible';
+import {updateTasks} from '../../../store/actions/tasks';
 
 const URL = 'https://todo-backend-express.herokuapp.com/';
 
@@ -17,6 +18,9 @@ const mapDispatchToProps = dispatch => {
     return {
         changeVision(trueOrFalse){
             dispatch(changeVision(trueOrFalse))
+        },
+        updateTasks(tasks){
+            dispatch(updateTasks(tasks))
         }
     }
 }
@@ -39,6 +43,8 @@ class FormComponent extends Component {
             title: this.state.title,
             order: this.state.order
         });
+        const tasks = await axios.get(URL);
+        this.props.updateTasks(tasks.data)
         this.props.changeVision(1);
     }
 
