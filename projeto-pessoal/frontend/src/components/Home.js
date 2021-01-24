@@ -3,6 +3,7 @@ import Table from './templates/table/Table';
 import Form from './templates/form/Form';
 
 import {Card, Nav} from 'react-bootstrap';
+import {Check, CardText, ListTask, Exclamation} from 'react-bootstrap-icons';
 
 import {connect} from 'react-redux';
 import {changeVision} from '../store/actions/whichTableIsVisible';
@@ -66,16 +67,16 @@ class Home extends Component {
                 <Card.Header>
                     <Nav variant="tabs" defaultActiveKey="#first">
                     <Nav.Item>
-                        <Nav.Link active={this.props.whichTableIsVisible === 1 ? true : false} onClick={() => this.props.changeVision(1)}>Tarefas</Nav.Link>
+                        <Nav.Link active={this.props.whichTableIsVisible === 1 ? true : false} onClick={() => this.props.changeVision(1)}><ListTask/> Tarefas</Nav.Link>
                     </Nav.Item>
                     <Nav.Item>
-                        <Nav.Link active={this.props.whichTableIsVisible === 2 ? true : false} onClick={() => this.props.changeVision(2)}>A fazer</Nav.Link>
+                        <Nav.Link active={this.props.whichTableIsVisible === 2 ? true : false} onClick={() => this.props.changeVision(2)}><Exclamation/> A fazer</Nav.Link>
                     </Nav.Item>
                     <Nav.Item>
-                        <Nav.Link active={this.props.whichTableIsVisible === 3 ? true : false} onClick={() => this.props.changeVision(3)}>Concluídas</Nav.Link>
+                        <Nav.Link active={this.props.whichTableIsVisible === 3 ? true : false} onClick={() => this.props.changeVision(3)}><Check/> Concluídas</Nav.Link>
                     </Nav.Item>
                     <Nav.Item>
-                        <Nav.Link active={this.props.whichTableIsVisible === 4 ? true : false} onClick={() => this.props.changeVision(4)}>Formulário</Nav.Link>
+                        <Nav.Link active={this.props.whichTableIsVisible === 4 ? true : false} onClick={() => this.props.changeVision(4)}><CardText/> Formulário</Nav.Link>
                     </Nav.Item>
                     </Nav>
                 </Card.Header>
