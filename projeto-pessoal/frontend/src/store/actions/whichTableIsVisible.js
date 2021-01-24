@@ -1,8 +1,8 @@
 // Action Creator
-export function changeVision(visible){
+export function changeVision(table){
     return {
         type: 'VISION_CHANGED',
-        payload: visible
+        payload: table
     }
 
 }

@@ -1,9 +1,9 @@
 import {createStore, combineReducers} from 'redux';
-import isTableVisible from './reducers/isTableVisible';
+import whichTableIsVisible from './reducers/whichTableIsVisible';
 import users from './reducers/tasks';
 
 const reducers = combineReducers({
-    isTableVisible,
+    whichTableIsVisible,
     users
 });
 
