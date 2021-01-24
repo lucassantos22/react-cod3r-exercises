@@ -13,19 +13,23 @@ export default props => (
                         <th>Status</th>
                         <th>Tarefa</th>
                         <th>Ordem</th>
-                        <th>Ação</th>
+                        <th>Excluir</th>
                     </tr>
                 </thead>
                 <tbody>
                     {props.tasks.map(task=>(
                         <tr>
-                        <td>{task.completed ? <Button onClick={()=>props.completeTask(task.url, false)} variant='success'><Check size='20'/></Button> : <Button onClick={()=>props.completeTask(task.url, true)} variant='warning'><Exclamation size='20'/></Button>}</td>
-                        {props.completed === true? <td style={{textDecoration: "line-through"}}>{task.title}</td> : <td>{task.title}</td>}
-                        <td>{task.order}</td>
-                        {!task.completed ? <td><Button variant="danger" onClick={()=>props.deleteTask(task.url)}><TrashFill/></Button></td> : <td><Button variant="secondary"><TrashFill/></Button></td>}
+                            <td>{task.completed ? <Button onClick={()=>props.completeTask(task.url, false)} variant='success'><Check size='20'/></Button> : <Button onClick={()=>props.completeTask(task.url, true)} variant='warning'><Exclamation size='20'/></Button>}</td>
+                            {task.completed === true? <td style={{textDecoration: "line-through"}}>{task.title}</td> : <td>{task.title}</td>}
+                            <td>{task.order}</td>
+                            {!task.completed ? <td><Button variant="danger" onClick={()=>props.deleteTask(task.url)}><TrashFill/></Button></td> : <td><Button variant="secondary" disabled><TrashFill/></Button></td>}
                         </tr>
                     ))}
                 </tbody>
+                <br/>
+                <Button variant="primary"  size="sm" onClick={()=>props.deleteCompletedTasks()}>
+                    Limpar tarefas concluídas
+                </Button>
             </>
         : 
             <Card>

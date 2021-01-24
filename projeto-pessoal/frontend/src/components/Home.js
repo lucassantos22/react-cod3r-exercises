@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import Table from './templates/table/Table';
 import Form from './templates/form/Form';
 
-import {Card, Nav, Tab} from 'react-bootstrap';
+import {Card, Nav} from 'react-bootstrap';
 import {Check, CardText, ListTask, Exclamation} from 'react-bootstrap-icons';
 
 import {connect} from 'react-redux';
@@ -41,9 +41,15 @@ class Home extends Component {
         this.updateTasks();
     }
 
+    async componentDidUpdate(){
+        this.updateTasks(); 
+    }
+
     async updateTasks(){
         const tasks = await axios.get(URL);
-        this.props.updateTasks(tasks.data);
+        if (tasks!=this.props.tasks) {
+            this.props.updateTasks(tasks.data);
+        }
     }
 
     async completeTask(url, completed){
@@ -51,8 +57,13 @@ class Home extends Component {
         {
             completed
         });
-        //this.updateTasks();
-        //this.forceUpdate();
+    }
+
+    async deleteCompletedTasks(){
+        const completedTasks = this.props.tasks.filter(task=>task.completed);
+        for(const completedTask of completedTasks){
+            await axios.delete(completedTask.url)
+        }
     }
 
     deleteTask = async (url)=>{
@@ -94,9 +105,23 @@ class Home extends Component {
                     </Nav>
                 </Card.Header>
                 <Card.Body>
-                    {this.props.whichTableIsVisible === 1 ? <Table deleteTask={url=>this.deleteTask(url)} completeTask={(url, completed)=>this.completeTask(url, completed)} tasks={this.props.tasks} completed='trueAndFalse'/> 
-                    : this.props.whichTableIsVisible === 2 ? <Table deleteTask={url=>this.deleteTask(url)} completeTask={(url, completed)=>this.completeTask(url, completed)} tasks={this.filterTasksNotCompleteds()}/> 
-                    : this.props.whichTableIsVisible === 3 ? <Table deleteTask={url=>this.deleteTask(url)} completeTask={(url, completed)=>this.completeTask(url, completed)} tasks={this.filterTasksCompleteds()} completed={true}/> 
+                    {this.props.whichTableIsVisible === 1 ? 
+                    <Table deleteTask={url=>this.deleteTask(url)} 
+                        completeTask={(url, completed)=>this.completeTask(url, completed)} 
+                        tasks={this.props.tasks} 
+                        completed='trueAndFalse'
+                        deleteCompletedTasks={()=>this.deleteCompletedTasks()}/> 
+                    : this.props.whichTableIsVisible === 2 ? 
+                    <Table deleteTask={url=>this.deleteTask(url)} 
+                        completeTask={(url, completed)=>this.completeTask(url, completed)} 
+                        tasks={this.filterTasksNotCompleteds()}
+                        deleteCompletedTasks={()=>this.deleteCompletedTasks()}/> 
+                        : this.props.whichTableIsVisible === 3 ? 
+                    <Table deleteTask={url=>this.deleteTask(url)} 
+                        completeTask={(url, completed)=>this.completeTask(url, completed)} 
+                        tasks={this.filterTasksCompleteds()} 
+                        completed={true}
+                        deleteCompletedTasks={()=>this.deleteCompletedTasks()}/> 
                     : <Form/>}
                 </Card.Body>
             </Card>
