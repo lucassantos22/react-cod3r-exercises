@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Table from './templates/table/Table';
 import Form from './templates/form/Form';
+import Alert from './templates/alert/Alert';
 
 import {Card, Nav} from 'react-bootstrap';
 import {Check, CardText, ListTask, Exclamation} from 'react-bootstrap-icons';
