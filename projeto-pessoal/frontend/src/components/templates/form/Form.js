@@ -14,6 +14,12 @@ const initialStale = {
     order: ''
 }
 
+const mapStateToProps = state =>{
+    return {
+        tasks: state.users.tasks
+    }
+}
+
 const mapDispatchToProps = dispatch => {
     return {
         changeVision(trueOrFalse){
@@ -35,13 +41,13 @@ class FormComponent extends Component {
 
     sendTask = async (e) =>{
         e.preventDefault();
-        if (this.state.title.length === 0 || this.state.order.length === 0){
-            alert('Todos os campos devem ser preenchidos');
+        if (this.state.title.length === 0){
+            alert('A tarefa deve ter um título');
             return;
         }
         axios.post(URL, {
             title: this.state.title,
-            order: this.state.order
+            order: this.props.tasks.length + 1
         });
         const tasks = await axios.get(URL);
         this.props.updateTasks(tasks.data)
@@ -58,12 +64,6 @@ class FormComponent extends Component {
                 <Form.Text className="text-muted">
                 Campo obrigatório
                 </Form.Text>
-
-                <Form.Label>Ordem</Form.Label>
-                <Form.Control onChange={e => this.setState({order:e.target.value})} type="number" required/>
-                <Form.Text className="text-muted">
-                Campo obrigatório
-                </Form.Text>
             </Form.Group>
         
             <Button variant="primary" type="submit" onClick={e => this.sendTask(e)}>
@@ -75,4 +75,4 @@ class FormComponent extends Component {
     }
 } 
 
-export default connect('', mapDispatchToProps)(FormComponent);
+export default connect(mapStateToProps, mapDispatchToProps)(FormComponent);
