@@ -4,8 +4,8 @@ import {connect} from 'react-redux';
 import axios from 'axios';
 
 import {Form, Button} from 'react-bootstrap';
-import {changeVision} from '../../../store/actions/whichTableIsVisible';
-import {updateTasks} from '../../../store/actions/tasks';
+import {changeVision} from '../../store/actions/whichTableIsVisible';
+import {updateTasks} from '../../store/actions/tasks';
 
 const URL = 'https://todo-backend-express.herokuapp.com/';
 

@@ -1,4 +1,4 @@
-import Navbar from './components/templates/navbar/Navbar';
+import Navbar from './components/templates/Navbar';
 import Footer from './components/templates/Footer';
 import Routes from './routes';
 
