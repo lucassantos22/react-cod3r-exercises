@@ -48,8 +48,15 @@ class Home extends Component {
 
     async updateTasks(){
         const tasks = await axios.get(URL);
+        this.sortTasksByOrder(tasks.data);
         if (JSON.stringify(tasks.data) == JSON.stringify(this.props.tasks)) return
         this.props.updateTasks(tasks.data);
+    }
+
+    sortTasksByOrder(taskList){
+        taskList.sort((firstTask, secondTask)=>{
+            return firstTask.order < secondTask.order ? -1 : firstTask.order > secondTask.order ? 1 : 0; 
+        });
     }
 
     async completeTask(url, completed){
@@ -65,16 +72,18 @@ class Home extends Component {
         for(const completedTask of completedTasks){
             await axios.delete(completedTask.url)
         }
+        if (completedTasks.length === 0){
+            alert('Não existem tarefas completas no momento');
+            return;
+        }
         await this.updateTasks();
     }
 
     deleteTask = async (url)=>{
         const confirmation = window.confirm('Tem certeza?');
         if (confirmation){
-            const id = url.split('/')[1];
-            await axios.delete(`${URL}/${id}`);
+            await axios.delete(url);
             const newUserList = this.props.tasks.filter(task=>task.url != url);
-            this.props.updateTasks(newUserList);
             await this.updateTasks();
         }
     }
