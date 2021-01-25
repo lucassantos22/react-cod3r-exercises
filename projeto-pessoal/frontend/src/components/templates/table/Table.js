@@ -26,7 +26,7 @@ export default props => (
                 </tbody>
                 <br/>
                 {props.completed ?
-                    <Button variant="primary"  size="sm" onClick={()=>props.deleteCompletedTasks()}>
+                    <Button variant="primary" size="sm" onClick={()=>props.deleteCompletedTasks()}>
                         Limpar tarefas concluídas
                     </Button>
                     : null
