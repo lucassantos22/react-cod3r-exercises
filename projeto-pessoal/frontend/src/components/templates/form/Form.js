@@ -45,6 +45,10 @@ class FormComponent extends Component {
             alert('A tarefa deve ter um título');
             return;
         }
+        if (this.state.title.length > 40){
+            alert('A tarefa não deve ultrapassar 40 caracteres');
+            return;
+        }
         axios.post(URL, {
             title: this.state.title,
             order: this.props.tasks.length + 1

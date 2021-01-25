@@ -83,7 +83,6 @@ class Home extends Component {
         const confirmation = window.confirm('Tem certeza?');
         if (confirmation){
             await axios.delete(url);
-            const newUserList = this.props.tasks.filter(task=>task.url != url);
             await this.updateTasks();
         }
     }
