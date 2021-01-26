@@ -3,7 +3,7 @@ import {Github} from 'react-bootstrap-icons'
 
 export default props => (
     <Navbar bg="dark" fixed="bottom">
-        <Navbar.Brand href="https://github.com/lucassantos22" style={{color: 'white'}}><Github style={{marginBottom: '2px'}}/> https://github.com/lucassantos22</Navbar.Brand>
+        <Navbar.Brand href="https://github.com/lucassantos22" style={{color: 'white'}}><Github style={{marginBottom: '3px'}}/> /lucassantos22</Navbar.Brand>
         <Navbar.Toggle />
         <Navbar.Collapse className="justify-content-end">
             <Navbar.Text style={{color: 'white'}}>

@@ -9,7 +9,7 @@ export default props => {
     const [title, setTitle] = useState('');
 
     return (
-        <Table striped hover>
+        <Table striped hover responsive borderless>
             {props.tasks.length > 0 ? 
                 <>
                     <thead>
@@ -40,7 +40,7 @@ export default props => {
                     </tbody>
                     <br/>
                     {props.completed ?
-                        <Button variant="primary" size="sm" onClick={()=>props.deleteCompletedTasks()}>
+                        <Button variant="primary" size="sm" onClick={()=>props.deleteCompletedTasks()} style={{padding: '10px'}}>
                             Limpar tarefas concluídas
                         </Button>
                         : null
