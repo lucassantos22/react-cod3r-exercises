@@ -1,18 +1,17 @@
-const CACHE_NAME = 'otimigas-app';
+const CACHE_NAME = 'todo_app';
 
 const urlsToCache = [
     '/',
-    '/static/js/bundle.js',
-    '/static/js/main.chunk.js',
-    '/static/js/1.chunk.js',
-    '/static/js/0.chunk.js',
-    '/favicon.ico',
-    '/css?family=Open+Sans',
-    '/icon?family=Material+Icons'
+    './index.html',
+    './favicon.ico',
+    './todo64.png',
+    './todo192.png',
+    './todo512.png'
 ];
 
 self.addEventListener('install', function (event) {
     // Perform install steps
+    console.log('[Service Worker] Install');
     event.waitUntil(
         caches.open(CACHE_NAME)
             .then(function (cache) {
