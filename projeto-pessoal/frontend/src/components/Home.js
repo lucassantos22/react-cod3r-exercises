@@ -79,6 +79,14 @@ class Home extends Component {
         await this.updateTasks();
     }
 
+    async editTask(url, title){
+        await axios.patch(url,
+        {
+            title
+        });
+        await this.updateTasks();
+    }
+
     deleteTask = async (url)=>{
         const confirmation = window.confirm('Tem certeza?');
         if (confirmation){
@@ -119,17 +127,20 @@ class Home extends Component {
                     {this.props.whichTableIsVisible === 1 ? 
                     <Table deleteTask={url=>this.deleteTask(url)} 
                         completeTask={(url, completed)=>this.completeTask(url, completed)} 
+                        editTask={(url, title)=>this.editTask(url, title)}
                         tasks={this.props.tasks} 
                         completed='trueAndFalse'
                         deleteCompletedTasks={()=>this.deleteCompletedTasks()}/> 
                     : this.props.whichTableIsVisible === 2 ? 
                     <Table deleteTask={url=>this.deleteTask(url)} 
-                        completeTask={(url, completed)=>this.completeTask(url, completed)} 
+                        completeTask={(url, completed)=>this.completeTask(url, completed)}
+                        editTask={(url, title)=>this.editTask(url, title)}
                         tasks={this.filterTasksNotCompleteds()}
                         deleteCompletedTasks={()=>this.deleteCompletedTasks()}/> 
                         : this.props.whichTableIsVisible === 3 ? 
                     <Table deleteTask={url=>this.deleteTask(url)} 
-                        completeTask={(url, completed)=>this.completeTask(url, completed)} 
+                        completeTask={(url, completed)=>this.completeTask(url, completed)}
+                        editTask={(url, title)=>this.editTask(url, title)}
                         tasks={this.filterTasksCompleteds()} 
                         completed={true}
                         deleteCompletedTasks={()=>this.deleteCompletedTasks()}/> 
