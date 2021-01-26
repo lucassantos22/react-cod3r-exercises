@@ -9,53 +9,53 @@ export default props => {
     const [title, setTitle] = useState('');
 
     return (
-        <Table striped hover responsive borderless>
-            {props.tasks.length > 0 ? 
-                <>
-                    <thead>
-                        <tr>
-                            <th>Status</th>
-                            <th>Tarefa</th>
-                            <th>Excluir</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {props.tasks.map(task=>(
-                            <tr key={task.url}>
-                                <td>{task.completed ? <Button onClick={()=>props.completeTask(task.url, false)} variant='success'><Check size='20'/></Button> : <Button onClick={()=>props.completeTask(task.url, true)} variant='warning'><Exclamation size='20'/></Button>}</td>
-                                {task.completed === false? 
-                                <InputGroup style={{width: '100%', marginTop: '12px'}}>
-                                    <FormControl
-                                        placeholder={task.title}
-                                        onChange={e => setTitle(e.target.value)}
-                                    />
-                                    <InputGroup.Append>
-                                    <Button variant="primary" onClick={()=>props.editTask(task.url, title)}>Editar</Button>
-                                    </InputGroup.Append>
-                                </InputGroup>
-                                    : <td style={{textDecoration: 'line-through'}}><span style={{marginTop: '12px'}}>{task.title}</span></td>}
-                                {!task.completed ? <td><Button variant="danger" onClick={()=>props.deleteTask(task.url)}><TrashFill/></Button></td> : <td><Button variant="secondary" disabled><TrashFill/></Button></td>}
+        <>
+            <Table striped hover responsive borderless>
+                {props.tasks.length > 0 ? 
+                    <>
+                        <thead>
+                            <tr>
+                                <th>Status</th>
+                                <th>Tarefa</th>
                             </tr>
-                        ))}
-                    </tbody>
-                    <br/>
-                    {props.completed ?
-                        <Button variant="primary" size="sm" onClick={()=>props.deleteCompletedTasks()} style={{padding: '10px'}}>
-                            Limpar tarefas concluídas
-                        </Button>
-                        : null
-                    }
-                </>
-            : 
-                <Card>
-                <Card.Body>
-                    <Card.Title id='Sobre'>Lista vazia</Card.Title>
-                    <Card.Text>
-                        Ops! Não existem tarefas {props.completed === true ? 'concluídas' : !props.completed ? 'em andamento' : ''} cadastradas :(
-                    </Card.Text>
-                </Card.Body>
-                </Card>
+                        </thead>
+                        <tbody>
+                            {props.tasks.map(task=>(
+                                <tr key={task.url}>
+                                    <td>{task.completed ? <Button onClick={()=>props.completeTask(task.url, false)} variant='success'><Check size='20'/></Button> : <Button onClick={()=>props.completeTask(task.url, true)} variant='warning'><Exclamation size='20'/></Button>}</td>
+                                    {task.completed === false? 
+                                    <InputGroup style={{width: '100%', marginTop: '12px'}}>
+                                        <FormControl
+                                            placeholder={task.title}
+                                            onChange={e => setTitle(e.target.value)}
+                                        />
+                                        <InputGroup.Append>
+                                        <Button variant="primary" onClick={()=>props.editTask(task.url, title)}>Editar</Button>
+                                        </InputGroup.Append>
+                                    </InputGroup>
+                                        : <td style={{textDecoration: 'line-through'}}><span style={{marginTop: '12px'}}>{task.title}</span></td>}
+                                    {!task.completed ? <td><Button variant="danger" onClick={()=>props.deleteTask(task.url)}><TrashFill/></Button></td> : <td><Button variant="secondary" disabled><TrashFill/></Button></td>}
+                                </tr>
+                            ))}
+                        </tbody>
+                    </>
+                : 
+                    <Card>
+                    <Card.Body>
+                        <Card.Title id='Sobre'>Lista vazia</Card.Title>
+                        <Card.Text>
+                            Ops! Não existem tarefas {props.completed === true ? 'concluídas' : !props.completed ? 'em andamento' : ''} cadastradas :(
+                        </Card.Text>
+                    </Card.Body>
+                    </Card>
+                }
+            </Table>
+            {props.completed ?
+                <Button variant="primary" size="sm" onClick={()=>props.deleteCompletedTasks()}>
+                    Limpar tarefas concluídas
+                </Button>
+                : null
             }
-        </Table>
+                        </>
     )
 }
