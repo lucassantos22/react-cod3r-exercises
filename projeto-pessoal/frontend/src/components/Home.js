@@ -80,6 +80,9 @@ class Home extends Component {
     }
 
     async editTask(url, title){
+        if (title.length === 0) {
+            alert('A tarefa deve ter um título');
+        }
         await axios.patch(url,
         {
             title
@@ -88,7 +91,7 @@ class Home extends Component {
     }
 
     deleteTask = async (url)=>{
-        const confirmation = window.confirm('Tem certeza?');
+        const confirmation = window.confirm('Tem certeza que deseja excluir?');
         if (confirmation){
             await axios.delete(url);
             await this.updateTasks();
@@ -110,35 +113,41 @@ class Home extends Component {
                 <Card.Header>
                     <Nav variant="tabs" defaultActiveKey="#first">
                     <Nav.Item>
-                        <Nav.Link active={this.props.whichTableIsVisible === 1 ? true : false} onClick={() => this.props.changeVision(1)}><ListTask/> Tarefas</Nav.Link>
+                        <Nav.Link active={this.props.whichTableIsVisible === 1 ? true : false} onClick={() => this.props.changeVision(1)}><ListTask/></Nav.Link>
                     </Nav.Item>
                     <Nav.Item>
-                        <Nav.Link active={this.props.whichTableIsVisible === 2 ? true : false} onClick={() => this.props.changeVision(2)}><Exclamation/> A fazer</Nav.Link>
+                        <Nav.Link active={this.props.whichTableIsVisible === 2 ? true : false} onClick={() => this.props.changeVision(2)}><Exclamation/></Nav.Link>
                     </Nav.Item>
                     <Nav.Item>
-                        <Nav.Link active={this.props.whichTableIsVisible === 3 ? true : false} onClick={() => this.props.changeVision(3)}><Check/> Concluídas</Nav.Link>
+                        <Nav.Link active={this.props.whichTableIsVisible === 3 ? true : false} onClick={() => this.props.changeVision(3)}><Check/></Nav.Link>
                     </Nav.Item>
                     <Nav.Item>
-                        <Nav.Link active={this.props.whichTableIsVisible === 4 ? true : false} onClick={() => this.props.changeVision(4)}><CardText/> Formulário</Nav.Link>
+                        <Nav.Link active={this.props.whichTableIsVisible === 4 ? true : false} onClick={() => this.props.changeVision(4)}><CardText/></Nav.Link>
                     </Nav.Item>
                     </Nav>
                 </Card.Header>
                 <Card.Body>
                     {this.props.whichTableIsVisible === 1 ? 
-                    <Table deleteTask={url=>this.deleteTask(url)} 
+                    <Table
+                        title='Tarefas'
+                        deleteTask={url=>this.deleteTask(url)} 
                         completeTask={(url, completed)=>this.completeTask(url, completed)} 
                         editTask={(url, title)=>this.editTask(url, title)}
                         tasks={this.props.tasks} 
                         completed='trueAndFalse'
                         deleteCompletedTasks={()=>this.deleteCompletedTasks()}/> 
                     : this.props.whichTableIsVisible === 2 ? 
-                    <Table deleteTask={url=>this.deleteTask(url)} 
+                    <Table
+                        title='A fazer'
+                        deleteTask={url=>this.deleteTask(url)} 
                         completeTask={(url, completed)=>this.completeTask(url, completed)}
                         editTask={(url, title)=>this.editTask(url, title)}
                         tasks={this.filterTasksNotCompleteds()}
                         deleteCompletedTasks={()=>this.deleteCompletedTasks()}/> 
                         : this.props.whichTableIsVisible === 3 ? 
-                    <Table deleteTask={url=>this.deleteTask(url)} 
+                    <Table 
+                        title='Conluídas'
+                        deleteTask={url=>this.deleteTask(url)} 
                         completeTask={(url, completed)=>this.completeTask(url, completed)}
                         editTask={(url, title)=>this.editTask(url, title)}
                         tasks={this.filterTasksCompleteds()} 

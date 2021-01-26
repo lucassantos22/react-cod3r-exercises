@@ -4,7 +4,7 @@ import './index.css';
 import App from './App';
 import {Provider} from 'react-redux';
 import storeConfig from './store/storeConfig';
-import * as serviceWorker from './serviceWorker';
+import {register} from './serviceWorker';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -17,7 +17,7 @@ ReactDOM.render(
   document.getElementById('root')
 );
 
-//serviceWorker.unregister();
+register();
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

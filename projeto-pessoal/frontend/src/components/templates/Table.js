@@ -10,6 +10,7 @@ export default props => {
 
     return (
         <>
+            <h3>{props.title}</h3>
             <Table striped hover responsive borderless>
                 {props.tasks.length > 0 ? 
                     <>
