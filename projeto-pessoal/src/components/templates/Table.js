@@ -10,6 +10,12 @@ export default props => {
     return (
         <>
             <h3>{props.title}</h3>
+            {props.completed ?
+                <Button variant="primary" style={{float: 'right', marginBottom: '-100%'}} size="sm" onClick={()=>props.deleteCompletedTasks()}>
+                    Limpar tarefas concluídas
+                </Button>
+            : null
+            }
             <Table striped hover responsive borderless>
                 {props.tasks.length > 0 ? 
                     <>
@@ -50,12 +56,6 @@ export default props => {
                     </Card>
                 }
             </Table>
-            {props.completed ?
-                <Button variant="primary" size="sm" onClick={()=>props.deleteCompletedTasks()}>
-                    Limpar tarefas concluídas
-                </Button>
-                : null
-            }
-                        </>
+        </>
     )
 }
