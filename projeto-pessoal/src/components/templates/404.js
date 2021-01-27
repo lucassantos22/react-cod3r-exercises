@@ -1,20 +1,16 @@
 import {Link} from 'react-router-dom'
-import {Modal, Button} from 'react-bootstrap';
+import {Card} from 'react-bootstrap';
 
 export default props => (
     <>
-        <Modal.Dialog>
-            <Modal.Header>
-                <Modal.Title>Erro 404</Modal.Title>
-            </Modal.Header>
-
-            <Modal.Body>
-                <p>Desculpe mas essa página não existe.</p>
-            </Modal.Body>
-
-            <Modal.Footer>
-                <Button variant="primary"><Link to='/' style={{color: 'white'}}>Voltar</Link></Button>
-            </Modal.Footer>
-        </Modal.Dialog>
+        <Card>
+        <Card.Body>
+            <Card.Title id='Sobre'>Erro 404</Card.Title>
+            <Card.Text>
+                Desculpe mas essa página não existe.
+            </Card.Text>
+            <Card.Link><Link to='/'>Voltar</Link></Card.Link>
+        </Card.Body>
+        </Card>
     </>
 )

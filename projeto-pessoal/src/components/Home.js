@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import Table from './templates/Table';
 import Form from './templates/Form';
-//import Alert from './templates/Alert';
 
 import {Card, Nav} from 'react-bootstrap';
 import {Check, CardText, ListTask, Exclamation} from 'react-bootstrap-icons';
@@ -90,7 +89,7 @@ class Home extends Component {
         await this.updateTasks();
     }
 
-    deleteTask = async (url)=>{
+    async deleteTask(url){
         const confirmation = window.confirm('Tem certeza que deseja excluir?');
         if (confirmation){
             await axios.delete(url);
