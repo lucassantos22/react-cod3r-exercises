@@ -2,12 +2,13 @@ import React, {Component} from 'react';
 import Table from './templates/Table';
 import Form from './templates/Form';
 
-import {Card, Nav} from 'react-bootstrap';
+import {Card, Nav, Spinner} from 'react-bootstrap';
 import {Check, CardText, ListTask, Exclamation} from 'react-bootstrap-icons';
 
 import {connect} from 'react-redux';
 import {changeVision} from '../store/actions/whichTableIsVisible';
 import {updateTasks} from '../store/actions/tasks';
+import {updateLoading} from '../store/actions/loading';
 
 import axios from 'axios';
 
@@ -16,7 +17,8 @@ const URL = 'https://todo-backend-express.herokuapp.com/';
 const mapStateToProps = state =>{
     return {
         whichTableIsVisible: state.whichTableIsVisible.whichTableIsVisible,
-        tasks: state.users.tasks
+        tasks: state.tasks.tasks,
+        loading: state.loading.loading
     }
 }
 
@@ -27,6 +29,9 @@ const mapDispatchToProps = dispatch =>{
         },
         updateTasks(userList){
             dispatch(updateTasks(userList));
+        },
+        updateLoading(trueOrFalse){
+            dispatch(updateLoading(trueOrFalse));
         }
     }
 }
@@ -38,17 +43,25 @@ class Home extends Component {
     }
 
     async componentWillMount(){
-        this.updateTasks();
+        this.props.updateLoading(true);
+        try {
+            await this.updateTasks();
+        } finally {
+            this.props.updateLoading(false);
+        }
     }
 
-    async componentDidUpdate(){
+    async componentDidUpdate(prevState){
+        if (prevState.loading !== this.props.loading) return;
         this.updateTasks(); 
     }
 
     async updateTasks(){
         const tasks = await axios.get(URL);
         this.sortTasksByOrder(tasks.data);
-        if (JSON.stringify(tasks.data) == JSON.stringify(this.props.tasks)) return
+        if (JSON.stringify(tasks.data) == JSON.stringify(this.props.tasks)) {
+            return;  
+        } 
         this.props.updateTasks(tasks.data);
     }
 
@@ -67,33 +80,48 @@ class Home extends Component {
     }
 
     async deleteCompletedTasks(){
+        this.props.updateLoading(true);
         const completedTasks = this.props.tasks.filter(task=>task.completed);
-        for(const completedTask of completedTasks){
-            await axios.delete(completedTask.url)
+        try {
+            for(const completedTask of completedTasks){
+                await axios.delete(completedTask.url)
+            }
+            if (completedTasks.length === 0){
+                alert('Não existem tarefas completas no momento');
+                return;
+            }
+            await this.updateTasks();
+        } finally {
+            this.props.updateLoading(false);
         }
-        if (completedTasks.length === 0){
-            alert('Não existem tarefas completas no momento');
-            return;
-        }
-        await this.updateTasks();
     }
 
     async editTask(url, title){
         if (title.length === 0) {
             alert('A tarefa deve ter um título');
         }
-        await axios.patch(url,
-        {
-            title
-        });
-        await this.updateTasks();
+        this.props.updateLoading(true);
+        try {
+            await axios.patch(url,
+            {
+                title
+            });
+            await this.updateTasks();
+        } finally {
+            this.props.updateLoading(false);
+        }
     }
 
     async deleteTask(url){
         const confirmation = window.confirm('Tem certeza que deseja excluir?');
         if (confirmation){
-            await axios.delete(url);
-            await this.updateTasks();
+            this.props.updateLoading(true);
+            try {
+                await axios.delete(url);
+                await this.updateTasks();
+            } finally {
+                this.props.updateLoading(false);
+            }
         }
     }
 
@@ -108,6 +136,10 @@ class Home extends Component {
     render(){
         return(
             <>
+            {
+                this.props.loading ? <Spinner animation="border" variant="info" style={{position: 'absolute', zIndex: '1', left: '50%', top: '40%'}}/>
+                : null    
+            }
             <Card>
                 <Card.Header>
                     <Nav variant="tabs" defaultActiveKey="#first">

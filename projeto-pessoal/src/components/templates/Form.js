@@ -6,6 +6,7 @@ import axios from 'axios';
 import {Form, Button} from 'react-bootstrap';
 import {changeVision} from '../../store/actions/whichTableIsVisible';
 import {updateTasks} from '../../store/actions/tasks';
+import {updateLoading} from '../../store/actions/loading';
 
 const URL = 'https://todo-backend-express.herokuapp.com/';
 
@@ -16,7 +17,7 @@ const initialStale = {
 
 const mapStateToProps = state =>{
     return {
-        tasks: state.users.tasks
+        tasks: state.tasks.tasks
     }
 }
 
@@ -27,6 +28,9 @@ const mapDispatchToProps = dispatch => {
         },
         updateTasks(tasks){
             dispatch(updateTasks(tasks))
+        },
+        updateLoading(trueOrFalse){
+            dispatch(updateLoading(trueOrFalse));
         }
     }
 }
@@ -49,12 +53,17 @@ class FormComponent extends Component {
             alert('A tarefa não deve ultrapassar 40 caracteres');
             return;
         }
-        axios.post(URL, {
-            title: this.state.title,
-            order: this.props.tasks.length + 1
-        });
-        const tasks = await axios.get(URL);
-        this.props.updateTasks(tasks.data)
+        this.props.updateLoading(true);
+        try{
+            axios.post(URL, {
+                title: this.state.title,
+                order: this.props.tasks.length + 1
+            });
+            const tasks = await axios.get(URL);
+            this.props.updateTasks(tasks.data)
+        } finally {
+            this.props.updateLoading(false);
+        }
         this.props.changeVision(1);
     }
 

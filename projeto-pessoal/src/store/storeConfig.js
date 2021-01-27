@@ -1,10 +1,12 @@
 import {createStore, combineReducers} from 'redux';
 import whichTableIsVisible from './reducers/whichTableIsVisible';
-import users from './reducers/tasks';
+import tasks from './reducers/tasks';
+import loading from './reducers/loading';
 
 const reducers = combineReducers({
     whichTableIsVisible,
-    users
+    tasks,
+    loading
 });
 
 export default function storeConfig(){
