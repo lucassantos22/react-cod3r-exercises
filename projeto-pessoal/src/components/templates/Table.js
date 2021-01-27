@@ -3,7 +3,6 @@ import React, {useState} from 'react';
 import {Table, Button, Card, InputGroup, FormControl} from 'react-bootstrap';
 import { Check, TrashFill, Exclamation } from 'react-bootstrap-icons';
 
-
 export default props => {
 
     const [title, setTitle] = useState('');
